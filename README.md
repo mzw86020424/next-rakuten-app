@@ -33,7 +33,7 @@ http://localhost:3000
 ### コンテナに入るコマンド
 
 ```bash
-$ docker exec -ti app_web_1 sh
+$ docker exec -ti { container ID } sh
 ```
 
 ### eslintの実行コマンド
