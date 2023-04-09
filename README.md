@@ -35,3 +35,11 @@ http://localhost:3000
 ```bash
 $ docker exec -ti app_web_1 sh
 ```
+
+### eslintの実行コマンド
+
+```bash
+$ npm run lint
+```
+#### 参考
+https://maku.blog/p/dexgg8o/
