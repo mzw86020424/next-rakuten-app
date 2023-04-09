@@ -29,3 +29,9 @@ $ docker-compose up -d
 ```bash
 http://localhost:3000
 ```
+
+### コンテナに入るコマンド
+
+```bash
+$ docker exec -ti app_web_1 sh
+```
