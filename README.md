@@ -41,5 +41,13 @@ $ docker exec -ti { container ID } sh
 ```bash
 $ npm run lint
 ```
+
+### jestの実行コマンド
+
+```bash
+$ yarn test:ci
+```
+
 #### 参考
 https://maku.blog/p/dexgg8o/
+https://zenn.dev/shootacean/articles/how-to-set-up-jest-in-a-nextjs-project
