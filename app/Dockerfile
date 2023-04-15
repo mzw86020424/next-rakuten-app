@@ -8,6 +8,8 @@ WORKDIR /app
 COPY . .
 
 # アプリケーションの依存パッケージをインストールする
+RUN npm install --save-dev @typescript-eslint/eslint-plugin
+
 RUN npm install
 
 # アプリケーションをビルドする
@@ -17,4 +19,4 @@ RUN npm run build
 EXPOSE 3000
 
 # コンテナが起動した時に実行されるコマンドを指定する
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
