@@ -8,9 +8,7 @@ WORKDIR /app
 COPY . .
 
 # アプリケーションの依存パッケージをインストールする
-RUN npm install --save-dev @typescript-eslint/eslint-plugin
-
-RUN npm install
+RUN npm ci
 
 # アプリケーションをビルドする
 RUN npm run build
