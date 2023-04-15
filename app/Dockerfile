@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # アプリケーションの依存パッケージをインストールする
-RUN npm install
+RUN npm ci
 
 # アプリケーションをビルドする
 RUN npm run build
@@ -17,4 +17,4 @@ RUN npm run build
 EXPOSE 3000
 
 # コンテナが起動した時に実行されるコマンドを指定する
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
