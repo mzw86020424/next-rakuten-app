@@ -5,3 +5,10 @@ services:
     build: .
     ports:
       - "3000:3000"
+    volumes:
+      - ./:/app
+      # node_modulesを名前付きボリュームに隠す
+      - front_node_modules:/app/node_modules
+
+volumes:
+  front_node_modules:
