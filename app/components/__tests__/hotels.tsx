@@ -1,4 +1,4 @@
-import Hotels from '../hotels'
+import Hotels from '../../pages/hotels'
 import { render, fireEvent } from '@testing-library/react'
 
 describe('初期表示', () => {
