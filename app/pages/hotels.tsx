@@ -10,6 +10,7 @@ export default function Hotels() {
   return (
     <div>
       <input
+        placeholder="text"
         type="text"
         value={searchTerm}
         onChange={(x) => setSearchTerm(x.target.value)}
