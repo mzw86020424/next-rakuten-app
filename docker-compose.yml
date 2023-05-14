@@ -29,7 +29,7 @@ services:
       context: ./frontend/
       dockerfile: Dockerfile
     volumes:
-      - ./:/frontend/app
+      - ./frontend:/frontend
       # node_modulesを名前付きボリュームに隠す
       - front_node_modules:/frontend/node_modules
     command: 'yarn dev'

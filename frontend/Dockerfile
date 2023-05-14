@@ -2,7 +2,7 @@
 FROM node:16.11.1-alpine
 
 # 作業ディレクトリを指定する
-WORKDIR /app
+WORKDIR /frontend
 
 # ローカルのファイルをコンテナにコピーする
 COPY . .
