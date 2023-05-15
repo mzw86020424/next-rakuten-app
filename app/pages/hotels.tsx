@@ -1,49 +1,57 @@
+'use client'
+
 import { useState } from 'react'
-import { Hotel } from 'type/hotel.type'
-import axios from 'axios'
+import { HotelInfo } from '../types/hotels.type'
+import { getHotels } from '@/pages/api/getHotels'
 
-type SearchResponse = {
-  hotels: Hotel[]
-}
-
-const HotelSearch = () => {
+const Hotels = () => {
   const [query, setQuery] = useState('')
-  const [hotels, setHotels] = useState<Hotel[]>([])
+  const [hotels, setHotels] = useState<
+    {
+      hotel: [HotelInfo]
+    }[]
+  >([])
 
-  const handleSearch = async (): Promise<SearchResponse> => {
-    const { data } = await axios.get<SearchResponse>(
-      `https://app.rakuten.co.jp/services/api/Travel/KeywordHotelSearch/20170426?format=json&keyword=${query}&applicationId=${process.env.NEXT_PUBLIC_RAKUTEN_ID}`
-    )
-    return data
-  }
-
-  const handleButtonClick = async () => {
+  const fetchHotels = async () => {
     try {
-      const data = await handleSearch()
-      setHotels(data.hotels)
+      const hotelsData = await getHotels(query)
+      setHotels(hotelsData.hotels)
     } catch (error) {
       console.error(error)
     }
   }
 
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    void fetchHotels()
+  }
+
   return (
-    <div>
-      <input
-        placeholder="text"
-        type="text"
-        value={query}
-        onChange={(x) => setQuery(x.target.value)}
-      />
-      {/* eslint-disable-next-line */}
-      <button onClick={handleButtonClick}>Search</button>
-      {hotels.map((value: Hotel) => (
-        <div key={value.hotel[0].hotelBasicInfo.hotelNo}>
-          <h2>{value.hotel[0].hotelBasicInfo.hotelName}</h2>
-          <p>{value.hotel[0].hotelBasicInfo.hotelInformationUrl}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <form>
+        <input
+          placeholder="text"
+          type="text"
+          value={query}
+          onChange={(x) => setQuery(x.target.value)}
+        />
+        <button onClick={handleButtonClick}>Search</button>
+      </form>
+      {hotels.length > 0 ? (
+        hotels.map((value) => {
+          return (
+            <div key={value.hotel[0].hotelBasicInfo.hotelNo}>
+              {value.hotel[0].hotelBasicInfo.hotelName}
+              {value.hotel[0].hotelBasicInfo.hotelInformationUrl}
+              {value.hotel[0].hotelBasicInfo.hotelMinCharge}
+            </div>
+          )
+        })
+      ) : (
+        <div>No results</div>
+      )}
+    </>
   )
 }
 
-export default HotelSearch
+export default Hotels
