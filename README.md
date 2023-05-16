@@ -28,12 +28,13 @@ http://localhost:8000
 ### コンテナに入るコマンド
 
 ```bash
+# それぞれのディレクトリに移動後実行すること
 # フロント
 $ docker exec -ti { container ID } sh
 # api
 $ docker exec -ti { container ID } bash
-
-# それぞれのディレクトリに移動後実行すること
+# railsコンテナから以下コマンドでDBに接続できる
+$ rails dbconsole
 ```
 
 ### eslintの実行コマンド（フロント）
