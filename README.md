@@ -6,37 +6,37 @@
 $ git clone git@github.com:mzw86020424/next-rakuten-app.git
 ```
 
-2. ディレクトリに移動する
 
-```bash
-$ cd next-rakuten-app/app
-```
-
-3. docker イメージをビルドする
+2. docker イメージをビルドする
 
 ```bash
 $ docker-compose build
 ```
 
-4. コンテナを起動する
+3. コンテナを起動する
 
 ```bash
 $ docker-compose up -d
 ```
 
-5. ブラウザでアクセスする
+3. ブラウザでアクセスする
 
 ```bash
-http://localhost:3000
+http://localhost:8000
 ```
 
 ### コンテナに入るコマンド
 
 ```bash
+# フロント
 $ docker exec -ti { container ID } sh
+# api
+$ docker exec -ti { container ID } bash
+
+# それぞれのディレクトリに移動後実行すること
 ```
 
-### eslintの実行コマンド
+### eslintの実行コマンド（フロント）
 
 ```bash
 $ npm run lint
@@ -45,7 +45,7 @@ $ npm run lint
 https://maku.blog/p/dexgg8o/
 
 
-### jestの実行コマンド
+### jestの実行コマンド（フロント）
 ```bash
 $ yarn test:ci
 ```

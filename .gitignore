@@ -1,0 +1,59 @@
+# api側
+
+# Ignore bundler config.
+api/.bundle
+
+# Ignore all logfiles and tempfiles.
+api/log/*
+api/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+api/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# Ignore uploaded files in development.
+api/storage/*
+!/storage/.keep
+api/.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+api/config/master.key
+
+# フロント側
+
+# dependencies
+app/node_modules
+app/.pnp
+app/.pnp.js
+
+# testing
+app/coverage
+
+# next.js
+app/.next/
+app/out/
+
+# production
+app/build
+
+# misc
+app/.DS_Store
+*.pem
+
+# debug
+app/npm-debug.log*
+app/yarn-debug.log*
+app/yarn-error.log*
+
+# local env files
+app/.env*.local
+
+# vercel
+app/.vercel
+
+# typescript
+*.tsbuildinfo
+app/next-env.d.ts
