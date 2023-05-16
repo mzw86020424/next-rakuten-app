@@ -13,8 +13,5 @@ RUN npm ci
 # アプリケーションをビルドする
 RUN npm run build
 
-# ポート番号を指定する
-EXPOSE 3000
-
 # コンテナが起動した時に実行されるコマンドを指定する
 CMD ["npm", "run", "dev"]
