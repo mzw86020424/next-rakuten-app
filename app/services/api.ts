@@ -1,4 +1,4 @@
-import { HotelSearchResult } from '../../types/hotels.type'
+import { HotelSearchResult } from '@/types/hotels'
 
 export const getHotels = async (query: string): Promise<HotelSearchResult> => {
   const appId = process.env.NEXT_PUBLIC_RAKUTEN_ID
