@@ -1,5 +1,5 @@
-### 環境構築手順
-
+## 環境構築手順
+---
 1. このリポジトリをクローンする
 
 ```bash
@@ -24,11 +24,13 @@ $ docker-compose up -d
 ```bash
 http://localhost:8000
 ```
+<br>
 
-### コンテナに入るコマンド
+## 使用するコマンド
+---
+### コンテナに入る
 
 ```bash
-# それぞれのディレクトリに移動後実行すること
 # フロント
 $ docker exec -ti { container ID } sh
 # api
@@ -37,18 +39,45 @@ $ docker exec -ti { container ID } bash
 $ rails dbconsole
 ```
 
-### eslintの実行コマンド（フロント）
+### eslintの実行
 
 ```bash
+# フロントのコンテナに入ってから
 $ npm run lint
+# https://maku.blog/p/dexgg8o/
 ```
-#### 参考
-https://maku.blog/p/dexgg8o/
-
-
-### jestの実行コマンド（フロント）
+### jestの実行
 ```bash
+# フロントのコンテナに入ってから
 $ yarn test:ci
+# https://zenn.dev/shootacean/articles/how-to-set-up-jest-in-a-nextjs-project
 ```
-#### 参考
-https://zenn.dev/shootacean/articles/how-to-set-up-jest-in-a-nextjs-project
+<br>
+
+## commitのルール
+---
+### コミットメッセージのフォーマット（[参考](https://zenn.dev/mi0256/articles/1332e1d041cab4)）
+```
+:Emoji: Title / Reason / Specification / Issue
+```
+- Emoji（コミットの種類） <- ひと目でどんなコミットなのか判断するため
+- Title（コミットの概要） <- 簡潔にコミット内容を説明するため
+- Reason（コミットの理由） <- なぜこのコミットが必要なのか説明するため
+- Specification（コミットの意図・仕様） <- なぜこのようなコミット内容になったのか説明するため
+- Issue（コミットに対応したIssue） <- Issueベースで開発を進めるため
+
+
+### Emoji
+
+#### 🌱 :seedling: Initial
+#### 🔥 :fire: Update features
+#### ✨ :sparkles: New features
+#### ♻️  :recycle: Refactoring
+#### 🐛 :bug: Bug
+#### 🎨 :art: Design
+#### 📚 :books: Document
+#### 🔧 :wrench: Configuration
+#### ⚡️ :zap: Improve
+#### 🚀 :rocket: Deploy
+#### 🧬 :dna: Merge
+#### 🧪 :test_tube: Test
