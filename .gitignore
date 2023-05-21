@@ -25,35 +25,36 @@ api/config/master.key
 # フロント側
 
 # dependencies
-app/node_modules
-app/.pnp
-app/.pnp.js
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
 
 # testing
-app/coverage
+frontend/coverage
 
 # next.js
-app/.next/
-app/out/
+frontend/.next/
+frontend/out/
 
 # production
-app/build
+frontend/build
 
 # misc
-app/.DS_Store
+frontend/.DS_Store
 *.pem
 
 # debug
-app/npm-debug.log*
-app/yarn-debug.log*
-app/yarn-error.log*
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
 
 # local env files
-app/.env*.local
+frontend/.env*.local
+frontend/.env
 
 # vercel
-app/.vercel
+frontend/.vercel
 
 # typescript
 *.tsbuildinfo
-app/next-env.d.ts
+frontend/next-env.d.ts
