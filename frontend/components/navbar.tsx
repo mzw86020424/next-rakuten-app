@@ -1,5 +1,6 @@
 import styles from './navbar.module.css'
 import NextLink from 'next/link'
+import { LoginButton } from './LoginButton'
 
 export default function Navbar() {
   return (
@@ -17,6 +18,11 @@ export default function Navbar() {
           <NextLink href="/hotels" className={styles.navbar_link}>
             ホテル
           </NextLink>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <LoginButton />
         </li>
       </ul>
     </nav>
