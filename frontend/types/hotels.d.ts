@@ -50,3 +50,8 @@ export type HotelSearchResult = {
     hotel: [HotelInfo]
   }[]
 }
+
+export type HotelSearchParam = {
+  format: string
+  keyword: string
+}
