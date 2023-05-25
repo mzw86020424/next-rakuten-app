@@ -1,5 +1,5 @@
-class Api::v1::PostsController < SecuredController
-  skip_before_action :authorize_request, only: [:index, :show]
+class Api::V1::PostsController < SecuredController
+  skip_before_action :authorize_request, only: [:index,:show]
 
   def index
     posts = Post.all
@@ -30,6 +30,6 @@ class Api::v1::PostsController < SecuredController
   private
 
   def post_params
-    params.permit(:title, :caption)
+    params.permit(:title,:caption)
   end
 end
