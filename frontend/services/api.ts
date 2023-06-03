@@ -14,7 +14,7 @@ export const getHotels = async (query: string): Promise<HotelSearchResult> => {
   return data
 }
 
-const fetchRakutenApi = async <T, U>(
+const fetchRakutenApi = async <T extends Record<string, unknown>, U>(
   endpoint: string,
   params: T
 ): Promise<U> => {
@@ -27,7 +27,10 @@ const fetchRakutenApi = async <T, U>(
   return data
 }
 
-const createRakutenApiUrl = <T>(endpoint: string, params: T): string => {
+const createRakutenApiUrl = <T extends Record<string, unknown>>(
+  endpoint: string,
+  params: T
+): string => {
   const query = createQueryParams(params)
   const appId = process.env.NEXT_PUBLIC_RAKUTEN_ID
   if (!appId) {
@@ -38,9 +41,9 @@ const createRakutenApiUrl = <T>(endpoint: string, params: T): string => {
   return `https://app.rakuten.co.jp/services/api/${endpoint}/20170426?${query}&applicationId=${appId}`
 }
 
-const createQueryParams = <T>(params: T) => {
+const createQueryParams = <T extends Record<string, unknown>>(params: T) => {
   const query = Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
+    .map(([key, value]) => `${key}=${value as string}`)
     .join('&')
   return query
 }
