@@ -16,7 +16,12 @@ const fetchRakutenApi = async <T extends Record<string, unknown>, U>(
   endpoint: string,
   params: T
 ): Promise<U> => {
-  params = { ...params, format: 'json' } // format=jsonは必須かつ固定
+  // 必須かつ固定のパラメーターを追加
+  params = {
+    ...params,
+    format: 'json',
+    applicationId: process.env.NEXT_PUBLIC_RAKUTEN_ID,
+  }
 
   const url = createRakutenApiUrl<T>(endpoint, params)
   const response = await fetch(url)
@@ -38,7 +43,7 @@ const createRakutenApiUrl = <T extends Record<string, unknown>>(
       'Environment variable NEXT_PUBLIC_RAKUTEN_ID is not defined'
     )
   }
-  return `https://app.rakuten.co.jp/services/api/${endpoint}/20170426?${query}&applicationId=${appId}`
+  return `https://app.rakuten.co.jp/services/api/${endpoint}/20170426?${query}`
 }
 
 const createQueryParams = <T extends Record<string, unknown>>(params: T) => {
