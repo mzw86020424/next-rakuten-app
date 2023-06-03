@@ -52,6 +52,5 @@ export type HotelSearchResult = {
 }
 
 export type HotelSearchParam = {
-  format: string
   keyword: string
 }

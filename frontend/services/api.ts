@@ -1,10 +1,8 @@
-import { HotelSearchResult } from '@/types/hotels'
-import { HotelSearchParam } from '@/types/hotels'
+import { HotelSearchParam, HotelSearchResult } from '@/types/hotels'
 
 export const getHotels = async (query: string): Promise<HotelSearchResult> => {
   const endpoint = 'Travel/KeywordHotelSearch'
   const params = {
-    format: 'json',
     keyword: query,
   }
   const data = await fetchRakutenApi<HotelSearchParam, HotelSearchResult>(
@@ -18,6 +16,8 @@ const fetchRakutenApi = async <T extends Record<string, unknown>, U>(
   endpoint: string,
   params: T
 ): Promise<U> => {
+  params = { ...params, format: 'json' } // format=jsonは必須かつ固定
+
   const url = createRakutenApiUrl<T>(endpoint, params)
   const response = await fetch(url)
   if (!response.ok) {
