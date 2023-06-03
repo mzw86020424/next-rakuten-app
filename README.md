@@ -52,6 +52,17 @@ $ npm run lint
 $ yarn test:ci
 # https://zenn.dev/shootacean/articles/how-to-set-up-jest-in-a-nextjs-project
 ```
+### rubocopの実行（自動整形含む）
+```bash
+# apiコンテナに入ってから
+$ rubocop -A
+```
+### rspecの実行
+```bash
+# apiコンテナに入ってから
+$ rspec
+```
+
 <br>
 
 ## commitのルール
