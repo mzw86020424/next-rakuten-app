@@ -12,7 +12,6 @@ class Api::V1::PostsController < SecuredController
   end
 
   def create
-    # ユーザー認証
     post = @current_user.posts.build(post_params)
 
     if post.save
