@@ -1,3 +1,4 @@
+// 楽天トラベルキーワード検索API:https://webservice.rakuten.co.jp/documentation/keyword-hotel-search
 import { HotelSearchParam, HotelSearchResult } from '@/types/hotels'
 
 export const getHotels = async (query: string): Promise<HotelSearchResult> => {
