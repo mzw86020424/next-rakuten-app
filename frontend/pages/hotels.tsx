@@ -6,7 +6,7 @@ import { getHotels } from '@/services/rakutenApi'
 import styles from '@/styles/hotels.module.css'
 
 const Hotels = () => {
-  const [query, setQuery] = useState('')
+  const [keyword, setKeyword] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [hotels, setHotels] = useState<
@@ -29,10 +29,11 @@ const Hotels = () => {
 
   const fetchHotels = async (page = 1) => {
     try {
-      const hotelsData = await getHotels(query, page)
-      setHotels(hotelsData.hotels)
-      setCurrentPage(hotelsData.pagingInfo.page)
-      setTotalPages(hotelsData.pagingInfo.pageCount)
+      await getHotels(keyword, page).then((res) => {
+        setHotels(res.hotels)
+        setCurrentPage(res.pagingInfo.page)
+        setTotalPages(res.pagingInfo.pageCount)
+      })
     } catch (error) {
       console.error(error)
     }
@@ -43,8 +44,8 @@ const Hotels = () => {
       <input
         placeholder="text"
         type="text"
-        value={query}
-        onChange={(x) => setQuery(x.target.value)}
+        value={keyword}
+        onChange={(x) => setKeyword(x.target.value)}
       />
       <button onClick={handleSearchClick}>Search</button>
       <table className={styles['table-container']}>
