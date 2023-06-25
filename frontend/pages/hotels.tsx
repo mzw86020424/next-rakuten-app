@@ -7,16 +7,20 @@ import styles from '@/styles/hotels.module.css'
 
 const Hotels = () => {
   const [query, setQuery] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const [hotels, setHotels] = useState<
     {
       hotel: [HotelInfo]
     }[]
   >([])
 
-  const fetchHotels = async () => {
+  const fetchHotels = async (page = 1) => {
     try {
-      const hotelsData = await getHotels(query)
+      const hotelsData = await getHotels(query, page)
       setHotels(hotelsData.hotels)
+      setCurrentPage(hotelsData.pagingInfo.page)
+      setTotalPages(hotelsData.pagingInfo.pageCount)
     } catch (error) {
       console.error(error)
     }
@@ -70,6 +74,21 @@ const Hotels = () => {
           )}
         </tbody>
       </table>
+      <div className={styles['pagination-container']}>
+        <button
+          disabled={currentPage === 1}
+          onClick={() => fetchHotels(currentPage - 1)}
+        >
+          前へ
+        </button>
+        <span>{currentPage}</span>
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => fetchHotels(currentPage + 1)}
+        >
+          次へ
+        </button>
+      </div>
     </>
   )
 }
