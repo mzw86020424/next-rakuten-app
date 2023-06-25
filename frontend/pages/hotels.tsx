@@ -15,6 +15,18 @@ const Hotels = () => {
     }[]
   >([])
 
+  const handleSearchClick = () => {
+    void fetchHotels()
+  }
+
+  const handlePreviousClick = () => {
+    void fetchHotels(currentPage - 1)
+  }
+
+  const handleNextClick = () => {
+    void fetchHotels(currentPage + 1)
+  }
+
   const fetchHotels = async (page = 1) => {
     try {
       const hotelsData = await getHotels(query, page)
@@ -26,22 +38,15 @@ const Hotels = () => {
     }
   }
 
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    void fetchHotels()
-  }
-
   return (
     <>
-      <form>
-        <input
-          placeholder="text"
-          type="text"
-          value={query}
-          onChange={(x) => setQuery(x.target.value)}
-        />
-        <button onClick={handleButtonClick}>Search</button>
-      </form>
+      <input
+        placeholder="text"
+        type="text"
+        value={query}
+        onChange={(x) => setQuery(x.target.value)}
+      />
+      <button onClick={handleSearchClick}>Search</button>
       <table className={styles['table-container']}>
         <thead>
           <tr>
@@ -75,17 +80,11 @@ const Hotels = () => {
         </tbody>
       </table>
       <div className={styles['pagination-container']}>
-        <button
-          disabled={currentPage === 1}
-          onClick={() => fetchHotels(currentPage - 1)}
-        >
+        <button disabled={currentPage === 1} onClick={handlePreviousClick}>
           前へ
         </button>
         <span>{currentPage}</span>
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => fetchHotels(currentPage + 1)}
-        >
+        <button disabled={currentPage === totalPages} onClick={handleNextClick}>
           次へ
         </button>
       </div>
