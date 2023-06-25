@@ -81,13 +81,19 @@ const Hotels = () => {
         </tbody>
       </table>
       <div className={styles['pagination-container']}>
-        <button disabled={currentPage === 1} onClick={handlePreviousClick}>
-          前へ
-        </button>
-        <span>{currentPage}</span>
-        <button disabled={currentPage === totalPages} onClick={handleNextClick}>
-          次へ
-        </button>
+        <div>
+          {currentPage === 1 ? null : <a onClick={handlePreviousClick}>＜</a>}
+        </div>
+        <div>
+          <span>
+            {currentPage} / {totalPages}
+          </span>
+        </div>
+        <div>
+          {currentPage === totalPages ? null : (
+            <a onClick={handleNextClick}>＞</a>
+          )}
+        </div>
       </div>
     </>
   )
