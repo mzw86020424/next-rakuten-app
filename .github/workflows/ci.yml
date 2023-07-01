@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build
+        run: docker-compose build
+
+      - name: Rubocop
+        run: docker-compose run --rm api rubocop
+
+      - name: RSpec
+        run: docker-compose run --rm api rspec
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
+        run: |
+          git config --global user.name ${{ secrets.GITHUB_ACTOR }}
+          git config --global user.email ${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com
+          git fetch origin main:refs/remotes/origin/main
+          git checkout main
+          cp -R public/* .
+
+          git add .
+          git commit -m "Update GitHub Pages"
+          git push origin main
