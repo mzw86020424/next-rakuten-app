@@ -19,6 +19,12 @@ jobs:
       - name: Build
         run: docker-compose build
 
+      - name: Up
+        run: docker-compose up -d
+
+      - name: sleep for waiting launch db
+        run: sleep 1m
+
       - name: Rubocop
         run: docker-compose run --rm api rubocop
 
