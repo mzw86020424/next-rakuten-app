@@ -1,5 +1,5 @@
-import Navbar from '@/components/navbar'
-import { render } from '../utils'
+import Navbar from '../../components/navbar'
+import { render } from '@testing-library/react'
 
 describe('Navbarコンポーネント', () => {
   test('サイトのタイトルが表示される', () => {
@@ -7,10 +7,9 @@ describe('Navbarコンポーネント', () => {
     expect(getByText('サイトのタイトル')).toBeTruthy()
   })
 
-  test('ホームとホテル,ブログへのリンクが表示される', () => {
+  test('ホームとホテルへのリンクが表示される', () => {
     const { getByText } = render(<Navbar />)
     expect(getByText('ホーム')).toBeTruthy()
     expect(getByText('ホテル')).toBeTruthy()
-    expect(getByText('ブログ')).toBeTruthy()
   })
 })
