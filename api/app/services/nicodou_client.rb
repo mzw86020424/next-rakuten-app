@@ -7,9 +7,10 @@ class NicodouClient
 
     params = {
       'q' => keyword,
-      # ソート順、取得項目、サービス名はとりあえず固定
+      # ソート順、検索対象項目、取得項目、サービス名はとりあえず固定
       '_sort' => 'viewCounter',
       'targets' => 'title,description,tags',
+      'fields' => 'title,description,tags',
       '_context' => 'my-api'
     }
 
