@@ -15,17 +15,19 @@ describe('Navbarコンポーネント', () => {
 
   test('ホームをクリックすると正しいURLに遷移する', () => {
     const { getByText } = render(<Navbar />);
-    // "'homeLink' は 'null' の可能性があります。"の警告を回避するために、nullの場合は空のaタグを返す
-    const homeLink = getByText('ホーム').closest('a') ?? document.createElement('a');
+    const homeLink = getByText('ホーム').closest('a');
 
-    expect(homeLink.getAttribute('href')).toBe('/');
+    expect(homeLink).not.toBeNull();
+    // "'homeLink' は 'null' の可能性があります。"の警告を回避するために安全参照を実施
+    expect(homeLink?.getAttribute('href')).toBe('/');
   });
 
   test('ホテルをクリックすると正しいURLに遷移する', () => {
     const { getByText } = render(<Navbar />);
-    // "'hotelLink' は 'null' の可能性があります。"の警告を回避するために、nullの場合は空のaタグを返す
-    const hotelLink = getByText('ホテル').closest('a') ?? document.createElement('a');
-
-    expect(hotelLink.getAttribute('href')).toBe('/hotels');
+    const hotelLink = getByText('ホテル').closest('a');
+  
+    expect(hotelLink).not.toBeNull();
+    // "'hotelLink' は 'null' の可能性があります。"の警告を回避するために安全参照を実施
+    expect(hotelLink?.getAttribute('href')).toBe('/hotels');
   });
 })
