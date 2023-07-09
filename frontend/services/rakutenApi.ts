@@ -1,5 +1,4 @@
 import { HotelSearchParam, HotelSearchResult } from '@/types/hotels'
-import 'cross-fetch/polyfill'
 
 export const getHotels = async (query: string): Promise<HotelSearchResult> => {
   const endpoint = 'Travel/KeywordHotelSearch'
