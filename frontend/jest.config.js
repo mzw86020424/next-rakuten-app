@@ -15,8 +15,6 @@ const customJestConfig = {
     '^@/pages/(.*)$': '<rootDir>/pages/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
-  // utils.jsをテストから除外する設定を追加
-  testPathIgnorePatterns: ['<rootDir>/__tests__/utils.js'],
 }
 
 // createJestConfigを定義することによって、本ファイルで定義された設定がNext.jsの設定に反映されます
