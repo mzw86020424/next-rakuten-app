@@ -16,12 +16,14 @@ class NicodouClient
 
     res = get(endpoint, params)
 
+    raise "Error: #{res.code} #{res.message}" if res.code != '200'
+
     JSON.parse(res.body)
   end
 
   private
 
-  def get(endpoint, params={})
+  def get(endpoint, params = {})
     uri = URI.parse("https://api.search.nicovideo.jp/api/v2/#{endpoint}")
     uri.query = URI.encode_www_form(params)
 
