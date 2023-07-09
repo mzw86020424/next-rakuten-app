@@ -1,5 +1,5 @@
 import { Sample } from '../../components/Sample'
-import { render } from '@testing-library/react'
+import { render } from '../utils'
 
 describe('Sampleコンポーネント', () => {
   test('should first', () => {
