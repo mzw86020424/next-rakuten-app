@@ -1,7 +1,6 @@
 import { NextPage } from 'next'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { Blog } from '@/types/blogs'
 
 const Blogs: NextPage = () => {
   const { token } = useAuthContext()
@@ -22,9 +21,11 @@ const Blogs: NextPage = () => {
       title: title,
       caption: caption,
     }
-    console.log(token)
 
-    fetch('http://127.0.0.1:3000/api/v1/posts', {
+    if (!process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL) {
+      throw new Error('NEXT_PUBLIC_LOCAL_BACKEND_URL is not defined')
+    }
+    fetch(`${process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL}/api/v1/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,8 +39,7 @@ const Blogs: NextPage = () => {
         }
         return res.json()
       })
-      .then((data) => {
-        console.log(data)
+      .then(() => {
         setTitle('')
         setCaption('')
         alert('投稿が成功しました')
@@ -55,17 +55,6 @@ const Blogs: NextPage = () => {
   ) => {
     setState(e.target.value)
   }
-
-  console.log(token)
-
-  useEffect(() => {
-    const getPosts = async () => {
-      const res = await fetch('http://localhost:3000/api/v1/posts')
-      const data: Blog[] = await (res.json() as Promise<Blog[]>)
-      console.log(data)
-    }
-    void getPosts()
-  }, [])
 
   return (
     <div>
