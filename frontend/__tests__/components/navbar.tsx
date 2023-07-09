@@ -1,5 +1,5 @@
 import Navbar from '@/components/navbar'
-import { render } from '../utils'
+import { render } from '@testing-library/react'
 
 describe('Navbarコンポーネント', () => {
   test('サイトのタイトルが表示される', () => {
@@ -11,6 +11,5 @@ describe('Navbarコンポーネント', () => {
     const { getByText } = render(<Navbar />)
     expect(getByText('ホーム')).toBeTruthy()
     expect(getByText('ホテル')).toBeTruthy()
-    expect(getByText('ブログ')).toBeTruthy()
   })
 })

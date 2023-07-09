@@ -1,5 +1,5 @@
 import Hotels from '@/pages/hotels'
-import { render, fireEvent } from '../utils'
+import { render, fireEvent } from '@testing-library/react'
 
 describe('初期表示', () => {
   test('入力フォームと検索ボタンが表示されている', () => {
