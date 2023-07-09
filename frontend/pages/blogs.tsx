@@ -9,7 +9,7 @@ const Blogs: NextPage = () => {
   const [title, setTitle] = useState<string>('')
   const [caption, setCaption] = useState<string>('')
 
-  const onClick = () => {
+  const onClickPost = () => {
     if (!token) {
       alert('ログインしてください')
       return
@@ -87,7 +87,7 @@ const Blogs: NextPage = () => {
         }}
       />
       <br />
-      <button onClick={onClick}>新規投稿</button>
+      <button onClick={onClickPost}>新規投稿</button>
     </div>
   )
 }
