@@ -24,7 +24,7 @@ class NicodouClient
   private
 
   def get(endpoint, params = {})
-    uri = URI.parse("https://api.search.nicovideo.jp/api/v2/#{endpoint}")
+    uri = URI.parse("#{ENV["NICODOU_API_DOMAIN"]}/#{endpoint}")
     uri.query = URI.encode_www_form(params)
 
     http = Net::HTTP.new(uri.host, uri.port)
