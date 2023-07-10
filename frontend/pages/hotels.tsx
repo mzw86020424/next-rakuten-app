@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { HotelInfo } from '../types/hotels'
 import { getHotels } from '@/services/rakutenApi'
+import styles from '@/styles/hotels.module.css'
 
 const Hotels = () => {
   const [query, setQuery] = useState('')
@@ -37,19 +38,38 @@ const Hotels = () => {
         />
         <button onClick={handleButtonClick}>Search</button>
       </form>
-      {hotels.length > 0 ? (
-        hotels.map((value) => {
-          return (
-            <div key={value.hotel[0].hotelBasicInfo.hotelNo}>
-              {value.hotel[0].hotelBasicInfo.hotelName}
-              {value.hotel[0].hotelBasicInfo.hotelInformationUrl}
-              {value.hotel[0].hotelBasicInfo.hotelMinCharge}
-            </div>
-          )
-        })
-      ) : (
-        <div>No results</div>
-      )}
+      <table className={styles['table-container']}>
+        <thead>
+          <tr>
+            <th>ホテル名</th>
+            <th>URL</th>
+            <th>宿泊価格</th>
+          </tr>
+        </thead>
+        <tbody>
+          {hotels.length === 0 ? (
+            <tr>
+              <td colSpan={3}>No results</td>
+            </tr>
+          ) : (
+            hotels.map((value) => {
+              return (
+                <tr key={value.hotel[0].hotelBasicInfo.hotelNo}>
+                  <td>
+                    <h1>{value.hotel[0].hotelBasicInfo.hotelName}</h1>
+                  </td>
+                  <td>
+                    <a href={value.hotel[0].hotelBasicInfo.hotelInformationUrl}>
+                      {value.hotel[0].hotelBasicInfo.hotelInformationUrl}
+                    </a>
+                  </td>
+                  <td>{value.hotel[0].hotelBasicInfo.hotelMinCharge}円 ~</td>
+                </tr>
+              )
+            })
+          )}
+        </tbody>
+      </table>
     </>
   )
 }
