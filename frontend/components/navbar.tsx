@@ -19,6 +19,11 @@ export default function Navbar() {
             ホテル
           </NextLink>
         </li>
+        <li>
+          <NextLink href="/blogs" className={styles.navbar_link}>
+            ブログ
+          </NextLink>
+        </li>
       </ul>
       <ul>
         <li>
