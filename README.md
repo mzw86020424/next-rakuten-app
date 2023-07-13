@@ -32,9 +32,9 @@ http://localhost:8000
 
 ```bash
 # フロント
-$ docker exec -ti { container ID } sh
+$ docker-compose exec front sh
 # api
-$ docker exec -ti { container ID } bash
+$ docker-compose exec api bash
 # railsコンテナから以下コマンドでDBに接続できる
 $ rails dbconsole
 ```
@@ -80,15 +80,15 @@ $ rspec
 
 ### Emoji
 
-#### 🌱 :seedling: Initial
-#### 🔥 :fire: Update features
-#### ✨ :sparkles: New features
-#### ♻️  :recycle: Refactoring
-#### 🐛 :bug: Bug
-#### 🎨 :art: Design
-#### 📚 :books: Document
-#### 🔧 :wrench: Configuration
-#### ⚡️ :zap: Improve
-#### 🚀 :rocket: Deploy
-#### 🧬 :dna: Merge
-#### 🧪 :test_tube: Test
+#### :seedling: Initial
+#### :fire: Update features
+#### :sparkles: New features
+#### :recycle: Refactoring
+#### :bug: Bug
+#### :art: Design
+#### :books: Document
+#### :wrench: Configuration
+#### :zap: Improve
+#### :rocket: Deploy
+#### :dna: Merge
+#### :test_tube: Test
