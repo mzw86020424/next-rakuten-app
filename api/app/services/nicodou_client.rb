@@ -24,7 +24,7 @@ class NicodouClient
   private
 
   def get(endpoint, params = {})
-    uri = URI.parse("#{ENV["NICODOU_API_DOMAIN"]}/#{endpoint}")
+    uri = URI.parse("#{ENV.fetch('NICODOU_API_DOMAIN', nil)}/#{endpoint}")
     uri.query = URI.encode_www_form(params)
 
     http = Net::HTTP.new(uri.host, uri.port)

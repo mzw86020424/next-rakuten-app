@@ -1,0 +1,2 @@
+class Nicodou < ApplicationRecord
+end
