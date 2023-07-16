@@ -2,9 +2,9 @@
 class NicodouClient
   require 'net/http'
 
-  def search_videos(keyword)
+  def search_videos(params)
     endpoint = 'snapshot/video/contents/search'
-    params = build_default_params(keyword)
+    params = build_default_params(params)
     res = get(endpoint, params)
 
     raise "Error: #{res.code} #{res.message}" if res.code != '200'
@@ -15,12 +15,12 @@ class NicodouClient
   private
 
   # ソート順、検索対象項目、取得項目、サービス名はとりあえず固定
-  def build_default_params(keyword, sort = nil, targets = nil, fields = nil)
+  def build_default_params(params)
     {
-      q: keyword,
-      _sort: sort || 'viewCounter',
-      targets: targets || 'title,description,tags',
-      fields: fields || 'title,description,tags',
+      q: params[:keyword] || '',
+      _sort: params[:sort] || 'viewCounter',
+      targets: params[:target] || 'title,description,tags',
+      fields: params[:fields] || 'title,description,tags',
       _context: 'my-api'
     }
   end
