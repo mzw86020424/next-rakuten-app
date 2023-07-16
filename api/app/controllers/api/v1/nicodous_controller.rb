@@ -1,14 +1,12 @@
 module Api
   module V1
     class NicodousController < ApplicationController
-      skip_before_action :authorize_request, only: [:index]
-
       def index
         nicodou_client = NicodouClient.new
 
-        nicodou_client.search_videos(params[:keyword])
+        nicodous = nicodou_client.search_videos(params[:keyword])
 
-        render json: nicdous, status: :ok
+        render json: nicodous, status: :ok
       end
 
       private

@@ -4,16 +4,7 @@ class NicodouClient
 
   def search_videos(keyword)
     endpoint = 'snapshot/video/contents/search'
-
-    params = {
-      'q' => keyword,
-      # ソート順、検索対象項目、取得項目、サービス名はとりあえず固定
-      '_sort' => 'viewCounter',
-      'targets' => 'title,description,tags',
-      'fields' => 'title,description,tags',
-      '_context' => 'my-api'
-    }
-
+    params = build_default_params(keyword)
     res = get(endpoint, params)
 
     raise "Error: #{res.code} #{res.message}" if res.code != '200'
@@ -22,6 +13,17 @@ class NicodouClient
   end
 
   private
+
+  # ソート順、検索対象項目、取得項目、サービス名はとりあえず固定
+  def build_default_params(keyword, sort = nil, targets = nil, fields = nil)
+    {
+      q: keyword,
+      _sort: sort || 'viewCounter',
+      targets: targets || 'title,description,tags',
+      fields: fields || 'title,description,tags',
+      _context: 'my-api'
+    }
+  end
 
   def get(endpoint, params = {})
     uri = URI.parse("#{ENV.fetch('NICODOU_API_DOMAIN', nil)}/#{endpoint}")
