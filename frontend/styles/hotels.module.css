@@ -49,4 +49,5 @@
 .pagination-container a:hover {
   text-decoration: underline;
   color: #337ab7;
+  cursor:pointer;
 }
