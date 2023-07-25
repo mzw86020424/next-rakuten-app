@@ -33,3 +33,21 @@
   padding: 16px;
   font-weight: bold;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.pagination-container div {
+  padding: 8px;
+  text-decoration: none;
+}
+
+.pagination-container a:hover {
+  text-decoration: underline;
+  color: #337ab7;
+  cursor:pointer;
+}

@@ -1,10 +1,12 @@
+// 楽天トラベルキーワード検索API:https://webservice.rakuten.co.jp/documentation/keyword-hotel-search
 import { HotelSearchParam, HotelSearchResult } from '@/types/hotels'
 import 'cross-fetch/polyfill'
 
-export const getHotels = async (query: string): Promise<HotelSearchResult> => {
+export const getHotels = async (keyword: string, page: number): Promise<HotelSearchResult> => {
   const endpoint = 'Travel/KeywordHotelSearch'
   const params = {
-    keyword: query,
+    keyword: keyword,
+    page: page,
   }
   const data = await fetchRakutenApi<HotelSearchParam, HotelSearchResult>(
     endpoint,

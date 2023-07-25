@@ -6,38 +6,48 @@ import { getHotels } from '@/services/rakutenApi'
 import styles from '@/styles/hotels.module.css'
 
 const Hotels = () => {
-  const [query, setQuery] = useState('')
+  const [keyword, setKeyword] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   const [hotels, setHotels] = useState<
     {
       hotel: [HotelInfo]
     }[]
   >([])
 
-  const fetchHotels = async () => {
+  const handleSearchClick = () => {
+    void fetchHotels()
+  }
+
+  const handlePreviousClick = () => {
+    void fetchHotels(currentPage - 1)
+  }
+
+  const handleNextClick = () => {
+    void fetchHotels(currentPage + 1)
+  }
+
+  const fetchHotels = async (page = 1) => {
     try {
-      const hotelsData = await getHotels(query)
-      setHotels(hotelsData.hotels)
+      await getHotels(keyword, page).then((res) => {
+        setHotels(res.hotels)
+        setCurrentPage(res.pagingInfo.page)
+        setTotalPages(res.pagingInfo.pageCount)
+      })
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    void fetchHotels()
-  }
-
   return (
     <>
-      <form>
-        <input
-          placeholder="text"
-          type="text"
-          value={query}
-          onChange={(x) => setQuery(x.target.value)}
-        />
-        <button onClick={handleButtonClick}>Search</button>
-      </form>
+      <input
+        placeholder="text"
+        type="text"
+        value={keyword}
+        onChange={(x) => setKeyword(x.target.value)}
+      />
+      <button onClick={handleSearchClick}>Search</button>
       <table className={styles['table-container']}>
         <thead>
           <tr>
@@ -70,6 +80,21 @@ const Hotels = () => {
           )}
         </tbody>
       </table>
+      <div className={styles['pagination-container']}>
+        <div>
+          {currentPage === 1 ? null : <a onClick={handlePreviousClick}>＜</a>}
+        </div>
+        <div>
+          <span>
+            {currentPage} / {totalPages}
+          </span>
+        </div>
+        <div>
+          {currentPage === totalPages ? null : (
+            <a onClick={handleNextClick}>＞</a>
+          )}
+        </div>
+      </div>
     </>
   )
 }
