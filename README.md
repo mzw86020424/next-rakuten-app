@@ -80,15 +80,15 @@ $ rspec
 
 ### Emoji
 
-#### 🌱 :seedling: Initial
-#### 🔥 :fire: Update features
-#### ✨ :sparkles: New features
-#### ♻️  :recycle: Refactoring
-#### 🐛 :bug: Bug
-#### 🎨 :art: Design
-#### 📚 :books: Document
-#### 🔧 :wrench: Configuration
-#### ⚡️ :zap: Improve
-#### 🚀 :rocket: Deploy
-#### 🧬 :dna: Merge
-#### 🧪 :test_tube: Test
+#### :seedling: Initial
+#### :fire: Update features
+#### :sparkles: New features
+#### :recycle: Refactoring
+#### :bug: Bug
+#### :art: Design
+#### :books: Document
+#### :wrench: Configuration
+#### :zap: Improve
+#### :rocket: Deploy
+#### :dna: Merge
+#### :test_tube: Test
