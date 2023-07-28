@@ -17,43 +17,53 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v1
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
 
-      - name: Build
-        run: docker-compose build
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16
 
-      - name: Up
-        run: docker-compose up -d
+    - name: Build and test
+      env:
+        TZ: Asia/Tokyo
+      run: |
+        docker build -t my-rails-app .
+        docker run -d -p 3000:3000 my-rails-app
 
-      - name: Set up database
-        run: |
-          docker-compose run --rm api rails db:create
-          docker-compose run --rm api rails db:migrate
+        # Wait for the Rails server to start
+        sleep 20
 
-      - name: sleep for waiting launch db
-        run: sleep 1m
+        # Run Rubocop
+        docker exec -it $(docker ps -q) bundle exec rubocop
 
-      - name: Rubocop
-        run: docker-compose run --rm api rubocop
+        # Run RSpec tests
+        docker exec -it $(docker ps -q) bundle exec rspec
 
-      - name: RSpec
-        run: docker-compose run --rm api rspec
+    - name: Deploy to GitHub Pages
+      env:
+        TZ: Asia/Tokyo
+        JEKYLL_ENV: production
+      run: |
+        docker build -t my-rails-app .
+        docker run -d -p 4000:4000 my-rails-app
 
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
-        run: |
-          git config --global user.name ${{ secrets.GITHUB_ACTOR }}
-          git config --global user.email ${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com
-          git fetch origin main:refs/remotes/origin/main
-          git checkout main
-          cp -R public/* .
+        # Wait for the Jekyll server to start
+        sleep 20
 
-          git add .
-          git commit -m "Update GitHub Pages"
-          git push origin main
+        # Optionally, build your static site assets here, e.g., using webpacker or any other build tool your app requires
+
+        # Deploy to GitHub Pages (replace `gh-pages` with your target branch)
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "GitHub Actions"
+        git checkout -B gh-pages
+        git add -f public # Add your static site assets or any other files to be deployed
+        git commit -m "Deploy static site assets to GitHub Pages"
+        git push -f origin gh-pages
