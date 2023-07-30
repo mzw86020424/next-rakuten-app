@@ -5,6 +5,19 @@ on:
     branches:
       - main
 
+env:
+  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+  AUTH0_IDENTIFIER: ${{ secrets.AUTH0_IDENTIFIER }}
+  NICODOU_API_DOMAIN: ${{ secrets.NICODOU_API_DOMAIN }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
+  NEXT_PUBLIC_RAKUTEN_ID: ${{ secrets.NEXT_PUBLIC_RAKUTEN_ID }}
+  NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+  NEXT_APP_REST_URL: ${{ secrets.NEXT_APP_REST_URL }}
+  NEXT_PUBLIC_AUTH0_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH0_DOMAIN }}
+  NEXT_PUBLIC_AUTH0_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_AUTH0_CLIENT_ID }}
+  NEXT_PUBLIC_AUTH0_AUDIENCE: ${{ secrets.NEXT_PUBLIC_AUTH0_AUDIENCE }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
