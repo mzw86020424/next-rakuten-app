@@ -8,6 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: sample
       MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
     ports:
       - 4306:3306
     volumes:
