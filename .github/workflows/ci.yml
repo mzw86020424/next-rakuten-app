@@ -47,7 +47,7 @@ jobs:
 
       - name: Set up database
         run: |
-          docker-compose run --rm api rails db:create
+          docker-compose run --rm api rails db:create RAILS_ENV=development
           docker-compose run --rm api rails db:migrate
 
       - name: sleep for waiting launch db
