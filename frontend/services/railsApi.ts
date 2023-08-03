@@ -1,11 +1,12 @@
-const getNicodouVideos = async (params: RequestInit) => {
+export const getNicodouVideos = async (keyword: string) => {
   const path = 'nicodous'
+  const params = { keyword: keyword }
   return await fetchRailsApi(path, params)
 }
 
-const fetchRailsApi = async (path: string, options: RequestInit = {}) => {
-  const url = createRailsApiUrl(path)
-  const response = await fetch(url, options)
+const fetchRailsApi = async <T extends Record<string, unknown>>(path: string, params: T) => {
+  const url = createRailsApiUrl(path, params)
+  const response = await fetch(url)
   if (!response.ok) {
     throw new Error('Network response was not ok')
   }
@@ -13,7 +14,15 @@ const fetchRailsApi = async (path: string, options: RequestInit = {}) => {
   return data
 }
 
-const createRailsApiUrl = (path: string) => {
-  const url = `${process.env.NEXT_PUBLIC_RAILS_API_URL}/${path}`
+const createRailsApiUrl = <T extends Record<string, unknown>>(path: string, params: T) => {
+  const query = createQueryParams(params)
+  const url = `${process.env.NEXT_PUBLIC_RAILS_API_URL}/${path}?${query}`
   return url
+}
+
+const createQueryParams = <T extends Record<string, unknown>>(params: T) => {
+  const query = Object.entries(params)
+    .map(([key, value]) => `${key}=${value as string}`)
+    .join('&')
+  return query
 }
