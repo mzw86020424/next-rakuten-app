@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+  AUTH0_IDENTIFIER: ${{ secrets.AUTH0_IDENTIFIER }}
+  NICODOU_API_DOMAIN: ${{ secrets.NICODOU_API_DOMAIN }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
+  NEXT_PUBLIC_RAKUTEN_ID: ${{ secrets.NEXT_PUBLIC_RAKUTEN_ID }}
+  NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+  NEXT_APP_REST_URL: ${{ secrets.NEXT_APP_REST_URL }}
+  NEXT_PUBLIC_AUTH0_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH0_DOMAIN }}
+  NEXT_PUBLIC_AUTH0_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_AUTH0_CLIENT_ID }}
+  NEXT_PUBLIC_AUTH0_AUDIENCE: ${{ secrets.NEXT_PUBLIC_AUTH0_AUDIENCE }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build
+        run: docker-compose build api db
+
+      - name: Up
+        run: docker-compose up -d api db
+
+      - name: Set up database
+        run: |
+          docker-compose run --rm api rails db:create RAILS_ENV=development
+          docker-compose run --rm api rails db:migrate
+
+      - name: sleep for waiting launch db
+        run: sleep 3m
+
+      - name: Rubocop
+        run: docker-compose run --rm api rubocop
+
+      - name: RSpec
+        run: docker-compose run --rm api rspec
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
+        run: |
+          git config --global user.name ${{ secrets.GITHUB_ACTOR }}
+          git config --global user.email ${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com
+          git fetch origin main:refs/remotes/origin/main
+          git checkout main
+          cp -R public/* .
+
+          git add .
+          git commit -m "Update GitHub Pages"
+          git push origin main
