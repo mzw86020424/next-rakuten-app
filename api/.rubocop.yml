@@ -3,7 +3,8 @@ inherit_from: .rubocop_todo.yml
 require:
   - rubocop-performance
   - rubocop-rails
-  - rubocop-rspec
+  # 細かすぎるのでとりあえず無効化
+  # - rubocop-rspec
 
 # AllCopsオプションで全てのCopsを対象にできる
 AllCops:
