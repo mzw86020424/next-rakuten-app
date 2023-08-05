@@ -1,12 +1,9 @@
 .table-container {
-  width: 90%;
+  width: 95%;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
   font-size: 14px;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin: 32px auto;
 }
 
 .table-container th,
@@ -49,5 +46,5 @@
 .pagination-container a:hover {
   text-decoration: underline;
   color: #337ab7;
-  cursor:pointer;
+  cursor: pointer;
 }
