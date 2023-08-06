@@ -4,9 +4,9 @@ RSpec.describe SamplesController do
   describe 'GET #index' do
     context 'sampleのデータが存在する場合' do
       # rubocop:disable RSpec/IndexedLet
-      let!(:sample1) { Sample.create! }
-      let!(:sample2) { Sample.create! }
-      let!(:sample3) { Sample.create! }
+      let!(:sample1) { create(:sample) }
+      let!(:sample2) { create(:sample) }
+      let!(:sample3) { create(:sample) }
       # rubocop:enable RSpec/IndexedLet
 
       # rubocop:disable RSpec/MultipleExpectations
