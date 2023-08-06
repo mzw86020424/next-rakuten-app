@@ -1,4 +1,4 @@
-import { videoInfo } from '@/types/nicodous'
+import { videoInfo, videosInfoRes } from '@/types/nicodous'
 import { useState } from 'react'
 import { getNicodouVideos } from 'services/railsApi'
 
@@ -8,9 +8,8 @@ const Nicodous = () => {
 
   const fetchNicodous = async () => {
     try {
-      // TODO: resの型を指定する
-      await getNicodouVideos(keyword).then((res) => {
-        setNicodous(res.data as videoInfo[])
+      await getNicodouVideos(keyword).then((res: videosInfoRes) => {
+        setNicodous(res.data)
       })
     } catch (error) {
       console.error(error)
