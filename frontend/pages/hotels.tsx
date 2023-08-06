@@ -67,12 +67,12 @@ const Hotels = () => {
             hotels.map((value) => {
               return (
                 <tr key={value.hotel[0].hotelBasicInfo.hotelNo}>
-                  <td>
+                  <td className="relative">
                     <Image
                       src={value.hotel[0].hotelBasicInfo.hotelImageUrl}
                       alt="ホテルのサムネイル画像"
-                      width={300}
-                      height={200}
+                      className="object-cover"
+                      fill
                       quality={100}
                     />
                   </td>
