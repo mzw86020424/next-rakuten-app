@@ -5,14 +5,17 @@ RSpec.describe NicodouClient do
     subject { described_class.new.send(:get, endpoint, params) }
 
     before do
-      allow_any_instance_of(Net::HTTP).to receive(:request)
+      allow(Net::HTTP).to receive(:new).and_return(http)
+      allow(http).to receive(:request)
+      allow(http).to receive(:use_ssl=).with(true)
     end
 
+    let(:http) { instance_double(Net::HTTP) }
     let(:endpoint) { 'snapshot/video/contents/search' }
     let(:params) { { q: 'hoge' } }
 
     it 'http.requestが呼ばれること' do
-      expect_any_instance_of(Net::HTTP).to receive(:request).with(an_instance_of(Net::HTTP::Get))
+      expect(http).to receive(:request).with(an_instance_of(Net::HTTP::Get))
       subject
     end
   end
@@ -21,26 +24,25 @@ RSpec.describe NicodouClient do
     subject { described_class.new.search_videos(params) }
 
     before do
-      allow_any_instance_of(described_class).to receive(:get).and_return(
-        OpenStruct.new(code: '200', message: 'OK', body: '{}')
-      )
+      allow(Net::HTTP).to receive(:new).and_return(http)
+      allow(http).to receive(:request).and_return(response)
+      allow(http).to receive(:use_ssl=).with(true)
     end
 
-    let(:endpoint) { 'snapshot/video/contents/search' }
-    let(:params) { { keyword: 'hoge' } }
+    let(:http) { instance_double(Net::HTTP) }
+    let(:response) { instance_double(Net::HTTPResponse, code: '200', message: 'OK', body: '{"videos": []}') }
+    let(:params) { { keyword: 'hoge' }}
 
-    it 'getが特定の引数とともに呼ばれること' do
-      expect_any_instance_of(described_class).to receive(:get).with(
-        endpoint,
-        {
-          q: 'hoge',
-          _sort: 'viewCounter',
-          targets: 'title,description,tags',
-          fields: 'title,description,tags',
-          _context: 'my-api'
-        }
-      )
-      subject
+    it 'APIからデータを取得できること' do
+      expect(subject).to eq({ 'videos' => [] })
+    end
+
+    context 'APIがエラーを返した場合' do
+      let(:response) { instance_double(Net::HTTPResponse, code: '500', message: 'Internal Server Error', body: '') }
+
+      it 'エラーが発生すること' do
+        expect { subject }.to raise_error(RuntimeError, 'Error: 500 Internal Server Error')
+      end
     end
   end
 end
