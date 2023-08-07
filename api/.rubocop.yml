@@ -32,10 +32,6 @@ Metrics:
 Documentation:
   Enabled: false
 
-# 一行あたりの文字数
-Layout/LineLength:
-  Enabled: false
-
 # メソッドの改行ルール
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
@@ -49,15 +45,18 @@ Style/Documentation:
   Enabled: false
 
 # コントローラ等のモジュールをネストしての宣言
+# module Foo
+#   class Bar
+#   end
+# end
+# 上記コードを下記のように記載することを許可
+# class Foo::Bar
+# end
 Style/ClassAndModuleChildren:
   Enabled: false
 
 # 文字列のfreeze（Ruby3からは自動でfreezeされるので要らない）
 Style/FrozenStringLiteralComment:
-  Enabled: false
-
-# ガード節の提案（難しいので一旦false）
-Style/GuardClause:
   Enabled: false
 
 # 文字列のダブルクォートチェック
@@ -78,14 +77,6 @@ Naming/VariableNumber:
 
 # メソッド名等の命名の指摘
 Naming/PredicateName:
-  Enabled: false
-
-# = と == の指摘
-Lint/AssignmentInCondition:
-  Enabled: false
-
-# 未i18nのチェック（バリデーションエラーメッセージをi18nに登録するのはやや冗長？なためfalse）
-Rails/I18nLocaleTexts:
   Enabled: false
 
 # before_actionの際の未定義メソッドのチェック（deviseとの兼ね合いで一旦false）
@@ -110,10 +101,6 @@ RSpec/MultipleExpectations:
 
 # let!の利用を検出。事前に値をセットアップしてテストを実行する際に使用
 RSpec/LetSetup:
-  Enabled: false
-
-# expectの変更が0であるかどうかのチェック
-RSpec/ChangeByZero:
   Enabled: false
 
 # contextの説明に適切な接頭辞/接尾辞を使用しているかどうかのチェック（日本語の場合、suffixとして対応するのが困難）
