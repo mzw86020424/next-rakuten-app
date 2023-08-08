@@ -69,7 +69,7 @@ const Hotels = () => {
                 <tr key={value.hotel[0].hotelBasicInfo.hotelNo}>
                   <td className="relative">
                     <Image
-                      src={value.hotel[0].hotelBasicInfo.hotelImageUrl}
+                      src={value.hotel[0].hotelBasicInfo.hotelThumbnailUrl}
                       alt="ホテルのサムネイル画像"
                       className="object-cover"
                       fill
