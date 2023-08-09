@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Post do
   describe 'validations' do
-    let(:user) { create(:user)}
-    let(:post) { Post.new(user: user, title: title_content, caption: caption_content) }
+    let(:post) { Post.new(user: create(:user), title: title_content, caption: caption_content) }
 
     context 'タイトルの長さによるテスト' do
       let(:caption_content) { 'a' * 100 } # 複数のテストで再利用されるためデフォルトとして設定
