@@ -6,17 +6,15 @@ RSpec.describe NicodouClient do
 
     before do
       allow(Net::HTTP).to receive(:new).and_return(http)
-      allow(http).to receive(:request)
-      allow(http).to receive(:use_ssl=).with(true)
     end
 
-    let(:http) { instance_double(Net::HTTP) }
+    let(:http) { instance_spy(Net::HTTP) }
     let(:endpoint) { 'snapshot/video/contents/search' }
     let(:params) { { q: 'hoge' } }
 
     it 'http.requestが呼ばれること' do
-      expect(http).to receive(:request).with(an_instance_of(Net::HTTP::Get))
       subject
+      expect(http).to have_received(:request).with(an_instance_of(Net::HTTP::Get))
     end
   end
 
@@ -31,7 +29,7 @@ RSpec.describe NicodouClient do
 
     let(:http) { instance_double(Net::HTTP) }
     let(:response) { instance_double(Net::HTTPResponse, code: '200', message: 'OK', body: '{"videos": []}') }
-    let(:params) { { keyword: 'hoge' }}
+    let(:params) { { keyword: 'hoge' } }
 
     it 'APIからデータを取得できること' do
       expect(subject).to eq({ 'videos' => [] })
