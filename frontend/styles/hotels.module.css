@@ -3,17 +3,19 @@
   border-collapse: collapse;
   font-family: Arial, sans-serif;
   font-size: 14px;
-  margin: 32px auto;
+  margin: 18px auto;
+  table-layout: fixed; /* 各セルの幅を均等にする */
 }
 
 .table-container th,
 .table-container td {
-  padding: 8px;
+  padding: 4px;
   border: 1px solid #ddd;
 }
 
 .table-container th {
   background-color: #f2f2f2;
+  width: 100%;
 }
 
 .table-container a {
@@ -25,10 +27,10 @@
   text-decoration: underline;
 }
 
-.no-results {
-  text-align: center;
-  padding: 16px;
-  font-weight: bold;
+.image-container {
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9のアスペクト比 */
+  position: relative;
 }
 
 .pagination-container {
