@@ -38,7 +38,7 @@ export type HotelInfo = {
   }
 }
 
-export type HotelSearchResult = {
+export type HotelsSearchResult = {
   pagingInfo: {
     recordCount: number
     pageCount: number
@@ -51,6 +51,14 @@ export type HotelSearchResult = {
   }[]
 }
 
-export type HotelSearchParam = {
+export type HotelSearchResult = {
+  // TODO:後でレスポンス見て定義
+}
+
+export type HotelsSearchParam = {
   keyword: string
+}
+
+export type HotelSearchParam = {
+  hotelNo: number
 }
