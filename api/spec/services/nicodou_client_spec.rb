@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe NicodouClient do
   describe  '#get' do
-    subject { described_class.new.send(:get, endpoint, params) }
+    subject(:get) { described_class.new.send(:get, endpoint, params) }
 
     before do
       allow(Net::HTTP).to receive(:new).and_return(http)
@@ -13,13 +13,13 @@ RSpec.describe NicodouClient do
     let(:params) { { q: 'hoge' } }
 
     it 'http.requestが呼ばれること' do
-      subject
+      get
       expect(http).to have_received(:request).with(an_instance_of(Net::HTTP::Get))
     end
   end
 
   describe '#search_videos' do
-    subject { described_class.new.search_videos(params) }
+    subject(:search_videos) { described_class.new.search_videos(params) }
 
     before do
       allow(Net::HTTP).to receive(:new).and_return(http)
@@ -32,14 +32,14 @@ RSpec.describe NicodouClient do
     let(:params) { { keyword: 'hoge' } }
 
     it 'APIからデータを取得できること' do
-      expect(subject).to eq({ 'videos' => [] })
+      expect(search_videos).to eq({ 'videos' => [] })
     end
 
     context 'APIがエラーを返した場合' do
       let(:response) { instance_double(Net::HTTPResponse, code: '500', message: 'Internal Server Error', body: '') }
 
       it 'エラーが発生すること' do
-        expect { subject }.to raise_error(RuntimeError, 'Error: 500 Internal Server Error')
+        expect { search_videos }.to raise_error(RuntimeError, 'Error: 500 Internal Server Error')
       end
     end
   end
