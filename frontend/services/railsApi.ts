@@ -16,7 +16,7 @@ const fetchRailsApi = async <T extends Record<string, unknown>>(path: string, pa
 
 const createRailsApiUrl = <T extends Record<string, unknown>>(path: string, params: T) => {
   const query = createQueryParams(params)
-  const url = `${process.env.NEXT_PUBLIC_RAILS_API_URL}/${path}?${query}`
+  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/${path}?${query}`
   return url
 }
 
