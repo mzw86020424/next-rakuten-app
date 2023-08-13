@@ -5,16 +5,108 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
-# AllCopsオプションで全てのCopsを対象にできる
 AllCops:
+  SuggestExtensions: false
+  # 最新のルールを適用する
   NewCops: enable
+  # 何のルールに引っかかったか表示する
+  DisplayCopNames: true
+  # rubocop対象外(リポジトリ毎で調節)
+  Exclude:
+    - 'Gemfile'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'log/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - 'config/environments/*'
+    - 'config/puma.rb'
 
-Style/FrozenStringLiteralComment:
+### ルールのカスタマイズ
+
+# 設定が厳しいので一旦全てfalseにする
+Metrics:
   Enabled: false
 
+# メソッドやクラスの上部にドキュメントコメントを必須とするかどうかの設定。
 Documentation:
   Enabled: false
 
-# 日本語だと「〜の場合」になるので suffix でないと対応できない
+# メソッドの改行ルール
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# 日本語にコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# クラスにコメントを残さなくても良い
+Style/Documentation:
+  Enabled: false
+
+# コントローラ等のモジュールをネストしての宣言
+# module Foo
+#   class Bar
+#   end
+# end
+# 上記コードを下記のように記載することを許可
+# class Foo::Bar
+# end
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# 文字列のfreeze（Ruby3からは自動でfreezeされるので要らない）
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# 文字列のダブルクォートチェック
+Style/StringLiterals:
+  Enabled: false
+
+# シンボルによる配列の%記法のチェック
+Style/SymbolArray:
+  Enabled: false
+
+# 文字列による配列の%記法のチェック
+Style/WordArray:
+  Enabled: false
+
+# 変数名に数字を許可
+Naming/VariableNumber:
+  Enabled: false
+
+# メソッド名等の命名の指摘
+Naming/PredicateName:
+  Enabled: false
+
+# before_actionの際の未定義メソッドのチェック（deviseとの兼ね合いで一旦false）
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+# 多重ネストされたdescribeやcontextのグループを検出
+RSpec/NestedGroups:
+  Enabled: false
+
+# よく利用されるヘルパーメソッドを多用することを検出
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+# itブロック内のコードが長すぎる場合を検出
+RSpec/ExampleLength:
+  Enabled: false
+
+# 一つのitブロック内で複数のexpectが存在することを検出
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# let!の利用を検出。事前に値をセットアップしてテストを実行する際に使用
+RSpec/LetSetup:
+  Enabled: false
+
+# contextの説明に適切な接頭辞/接尾辞を使用しているかどうかのチェック（日本語の場合、suffixとして対応するのが困難）
 RSpec/ContextWording:
+  Enabled: false
+
+# let文でインデックスを名前として使用
+RSpec/IndexedLet:
   Enabled: false
