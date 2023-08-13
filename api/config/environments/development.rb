@@ -44,6 +44,8 @@ Rails.application.configure do
 
   # localhost:3000では通信に失敗するためhostをdocker-compose.ymlのコンテナ名に合わせる
   config.hosts << 'api'
+  # app.get "/samples"のようなデバッグ用リクエストを許可
+  config.hosts << 'www.example.com'
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
