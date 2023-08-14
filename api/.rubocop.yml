@@ -4,7 +4,7 @@ require:
   - rubocop-performance
   - rubocop-rails
   # 細かすぎるのでとりあえず無効化
-  # - rubocop-rspec
+  - rubocop-rspec
 
 AllCops:
   SuggestExtensions: false

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NicodouClient do
-  describe  '#get' do
+  describe '#get' do
     subject(:get) { described_class.new.send(:get, endpoint, params) }
 
     before do
