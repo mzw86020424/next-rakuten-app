@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { HotelInfo } from '../types/hotels'
+import { HotelInfo } from '@/types/hotels'
 import { getHotels } from '@/services/rakutenApi'
 import styles from '@/styles/hotels.module.css'
 import Image from 'next/image'
