@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { HotelInfo } from '@/types/hotels'
 import { getHotel } from '@/services/rakutenApi'
+import Image from 'next/image'
 
 const Hotel = () => {
   const router = useRouter()
@@ -22,7 +23,8 @@ const Hotel = () => {
           setHotels(data)
         })
         .catch((error) => {
-          setError('error')
+          setError(error)
+          console.log(error)
         })
     }
   }, [id])
@@ -34,6 +36,12 @@ const Hotel = () => {
   return (
     <>
       <p>{hotelBasicInfo?.hotelName}</p>
+      <Image
+        src={hotelBasicInfo?.hotelImageUrl}
+        alt="ホテル画像"
+        height={500}
+        width={500}
+      />
     </>
   )
 }
