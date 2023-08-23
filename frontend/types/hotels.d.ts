@@ -51,10 +51,6 @@ export type HotelsSearchResult = {
   }[]
 }
 
-export type HotelSearchResult = {
-  // TODO:後でレスポンス見て定義
-}
-
 export type HotelsSearchParam = {
   keyword: string
 }

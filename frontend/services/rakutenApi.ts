@@ -18,7 +18,7 @@ export const getHotels = async (
   return data
 }
 
-export const getHotel = async (hotelNo: number): Promise<HotelSearchResult> => {
+export const getHotel = async (hotelNo: number): Promise<HotelsSearchResult> => {
   const endpoint = 'Travel/HotelDetailSearch'
   const params = { hotelNo: hotelNo }
 
