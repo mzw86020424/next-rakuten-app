@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { HotelInfo } from '@/types/hotels'
 import { getHotel } from '@/services/rakutenApi'
 
 const Hotel = () => {
   const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
   const { id } = router.query
   const [hotels, setHotels] = useState<
     {
@@ -13,24 +14,25 @@ const Hotel = () => {
   >([])
   const hotelBasicInfo = hotels[0]?.hotel[0]?.hotelBasicInfo
 
-  const testClick = () => {
-    fetchHotel()
-  }
-
-  const fetchHotel = async () => {
-    try {
-      await getHotel(Number(id)).then((res) => {
-        setHotels(res.hotels)
-        console.log(hotelBasicInfo)
-      })
-    } catch (error) {
-      console.error(error)
+  useEffect(() => {
+    if (id !== undefined) {
+      getHotel(Number(id))
+        .then((res) => res.hotels)
+        .then((data) => {
+          setHotels(data)
+        })
+        .catch((error) => {
+          setError('error')
+        })
     }
+  }, [id])
+
+  if (id === undefined) {
+    return <p>Loading...</p>
   }
 
   return (
     <>
-      <button onClick={testClick}>test</button>
       <p>{hotelBasicInfo?.hotelName}</p>
     </>
   )
