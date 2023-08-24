@@ -5,6 +5,7 @@ import { HotelInfo } from '@/types/hotels'
 import { getHotels } from '@/services/rakutenApi'
 import styles from '@/styles/hotels.module.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Hotels = () => {
   const [keyword, setKeyword] = useState('')
@@ -77,7 +78,12 @@ const Hotels = () => {
                     />
                   </td>
                   <td>
-                    <h1>{value.hotel[0].hotelBasicInfo.hotelName}</h1>
+                    <Link
+                      href={`/hotels/${value.hotel[0].hotelBasicInfo.hotelNo}`}
+                      target="_blank"
+                    >
+                      {value.hotel[0].hotelBasicInfo.hotelName}
+                    </Link>
                   </td>
                   <td>
                     <a href={value.hotel[0].hotelBasicInfo.hotelInformationUrl}>
