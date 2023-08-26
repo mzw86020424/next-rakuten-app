@@ -43,7 +43,7 @@ const fetchRakutenApi = async <T extends Record<string, unknown>, U>(
   const url = createRakutenApiUrl<T>(endpoint, params)
   const response = await fetch(url)
   if (!response.ok) {
-    throw new Error('Network response was not ok')
+    throw new Error(`${response.status}`)
   }
   const data = (await response.json()) as U
   return data

@@ -4,40 +4,54 @@ import { HotelInfo } from '@/types/hotels'
 import { getHotel } from '@/services/rakutenApi'
 import Image from 'next/image'
 
+async function fetchHotelData(id: string) {
+  const response = await getHotel(Number(id))
+  return response.hotels[0]?.hotel[0]
+}
+
 const Hotel = () => {
   const router = useRouter()
-  const [error, setError] = useState<string | null>(null)
   const { id } = router.query
-  const [hotels, setHotels] = useState<
-    {
-      hotel: [HotelInfo]
-    }[]
-  >([])
-  const hotelBasicInfo = hotels[0]?.hotel[0]?.hotelBasicInfo
+
+  const [hotelInfo, setHotelInfo] = useState<HotelInfo | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     if (id !== undefined) {
-      getHotel(Number(id))
-        .then((res) => res.hotels)
+      setLoading(true)
+      setError(null)
+
+      fetchHotelData(id as string)
         .then((data) => {
-          setHotels(data)
+          setHotelInfo(data || null)
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           setError(error)
-          console.log(error)
+        })
+        .finally(() => {
+          setLoading(false)
         })
     }
   }, [id])
 
-  if (id === undefined) {
+  if (loading) {
     return <p>Loading...</p>
+  }
+
+  if (error) {
+    return <p>An error occurred: {error.message}</p>
+  }
+
+  if (!hotelInfo) {
+    return <p>ホテル情報がありません</p>
   }
 
   return (
     <>
-      <p>{hotelBasicInfo?.hotelName}</p>
+      <p>{hotelInfo.hotelBasicInfo.hotelName}</p>
       <Image
-        src={hotelBasicInfo?.hotelImageUrl}
+        src={hotelInfo.hotelBasicInfo.hotelImageUrl}
         alt="ホテル画像"
         height={500}
         width={500}
