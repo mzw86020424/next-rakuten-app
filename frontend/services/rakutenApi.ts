@@ -1,5 +1,5 @@
 // 楽天トラベルキーワード検索API:https://webservice.rakuten.co.jp/documentation/keyword-hotel-search
-import { HotelsSearchParam, HotelsSearchResult, HotelSearchParam, HotelSearchResult } from '@/types/hotels'
+import { HotelsSearchParam, HotelsSearchResult, HotelSearchParam } from '@/types/hotels'
 import 'cross-fetch/polyfill'
 
 export const getHotels = async (
