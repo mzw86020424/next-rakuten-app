@@ -1,4 +1,4 @@
-import Hotels from '@/pages/hotels'
+import Hotels from '@/pages/hotels/index'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import { getHotels } from '@/services/rakutenApi'
