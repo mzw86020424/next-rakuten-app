@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User do
   describe 'validations' do
-    let(:user) { User.new(sub: sub_value) }
+    let(:user) { described_class.new(sub: sub_value) }
 
     context 'subが存在しない場合' do
       let(:sub_value) { nil }
