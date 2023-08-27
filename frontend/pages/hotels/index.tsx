@@ -96,11 +96,6 @@ const Hotels = () => {
                       {value.hotel[0].hotelBasicInfo.hotelName}
                     </Link>
                   </td>
-                  <td>
-                    <a href={value.hotel[0].hotelBasicInfo.hotelInformationUrl}>
-                      {value.hotel[0].hotelBasicInfo.hotelInformationUrl}
-                    </a>
-                  </td>
                   <td>{value.hotel[0].hotelBasicInfo.hotelMinCharge}円 ~</td>
                 </tr>
               )
