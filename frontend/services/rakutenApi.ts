@@ -43,12 +43,7 @@ const createRakutenApiUrl = <T extends Record<string, unknown>>(
   params: T
 ): string => {
   const query = createQueryParams(params)
-  const appId = process.env.NEXT_PUBLIC_RAKUTEN_ID
-  if (!appId) {
-    throw new Error(
-      'Environment variable NEXT_PUBLIC_RAKUTEN_ID is not defined'
-    )
-  }
+
   return `https://app.rakuten.co.jp/services/api/${endpoint}/20170426?${query}`
 }
 
