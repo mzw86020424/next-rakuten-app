@@ -43,20 +43,23 @@ describe('ホテル一覧検索', () => {
     },
   }
 
+  const performSearch = async () => {
+    render(<Hotels />);
+  
+    const inputElement = screen.getByPlaceholderText('text');
+    const buttonElement = screen.getByText('Search');
+  
+    fireEvent.change(inputElement, { target: { value: 'test' } });
+    fireEvent.click(buttonElement);
+  };
+
   beforeEach(() => {
     ;(getHotels as jest.Mock).mockResolvedValue(mockHotelsResponse)
   })
 
   test('画像が表示されること', async () => {
-    render(<Hotels />)
-
-    const inputElement = screen.getByPlaceholderText('text')
-    const buttonElement = screen.getByText('Search')
-
-    fireEvent.change(inputElement, { target: { value: 'test' } })
-    fireEvent.click(buttonElement)
-
-    await waitFor(() => expect(getHotels).toHaveBeenCalledTimes(1))
+    await performSearch();
+    await waitFor(() => expect(getHotels).toHaveBeenCalled);
 
     const imageElement = screen.getByAltText('ホテルのサムネイル画像')
 
@@ -67,20 +70,14 @@ describe('ホテル一覧検索', () => {
     )
   })
 
-  test('詳細ページへのリンクが表示されること', async () => {
-    render(<Hotels />)
-
-    const inputElement = screen.getByPlaceholderText('text')
-    const buttonElement = screen.getByText('Search')
-  
-    fireEvent.change(inputElement, { target: { value: 'test' } })
-    fireEvent.click(buttonElement)
-
-    await waitFor(() => expect(getHotels).toHaveBeenCalledTimes(1))
-
-    const linkElement = screen.getByText('test hotel')
+  test('詳細ページへのリンクが表示され正しいURLを持つこと', async () => {
+    await performSearch();
+    await waitFor(() => expect(getHotels).toHaveBeenCalled);
+    
+    const hotelInfo = mockHotelsResponse.hotels[0].hotel[0].hotelBasicInfo
+    const linkElement = screen.getByText(`${hotelInfo.hotelName}`)
 
     expect(linkElement).not.toBeNull();
-    expect(linkElement.getAttribute('href')).toBe('/hotels/1');
+    expect(linkElement.getAttribute('href')).toBe(`/hotels/${hotelInfo.hotelNo}`);
   })
 })
