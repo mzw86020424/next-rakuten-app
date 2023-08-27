@@ -30,7 +30,7 @@ describe('Hotels', () => {
               hotelNo: '1',
               hotelName: 'test hotel',
               hotelInformationUrl: 'http://testhotel.com',
-              hotelImageUrl: 'http://testhotel.com/image.jpg',
+              hotelThumbnailUrl: 'http://testhotel.com/image.jpg',
               hotelMinCharge: 1000,
             },
           },
@@ -44,26 +44,50 @@ describe('Hotels', () => {
   }
 
   beforeEach(() => {
+    ;(getHotels as jest.Mock).mockClear()
     ;(getHotels as jest.Mock).mockResolvedValue(mockHotelsResponse)
   })
 
-  it('検索後に画像が表示されること', async () => {
+  // ホテル検索実行
+  const performHotelSearch = async (searchValue = 'test') => {
     render(<Hotels />)
 
     const inputElement = screen.getByPlaceholderText('text')
     const buttonElement = screen.getByText('Search')
 
-    fireEvent.change(inputElement, { target: { value: 'test' } })
+    fireEvent.change(inputElement, { target: { value: searchValue } })
     fireEvent.click(buttonElement)
 
     await waitFor(() => expect(getHotels).toHaveBeenCalledTimes(1))
+  }
+
+  it('検索後に画像が表示されること', async () => {
+    await performHotelSearch()
 
     const imageElement = screen.getByAltText('ホテルのサムネイル画像')
 
     expect(imageElement).toBeInTheDocument()
     expect(imageElement).toHaveAttribute(
       'src',
-      mockHotelsResponse.hotels[0].hotel[0].hotelBasicInfo.hotelImageUrl
+      mockHotelsResponse.hotels[0].hotel[0].hotelBasicInfo.hotelThumbnailUrl
+    )
+  })
+
+  it('ホテル名のリンクをクリックすると、新しいタブでホテル情報のURLが聞かれる', async () => {
+    await performHotelSearch()
+
+    // ホテル名のリンクを取得
+    const hotelNameLink = screen.getByText('test hotel')
+
+    // リンクが新しいタブで開くことを確認
+    expect(hotelNameLink.closest('a')).toHaveAttribute('target', '_blank')
+    expect(hotelNameLink.closest('a')).toHaveAttribute(
+      'rel',
+      'noopener noreferrer'
+    )
+    expect(hotelNameLink.closest('a')).toHaveAttribute(
+      'href',
+      mockHotelsResponse.hotels[0].hotel[0].hotelBasicInfo.hotelInformationUrl
     )
   })
 })
