@@ -43,19 +43,29 @@ const Hotels = () => {
 
   return (
     <>
-      <input
-        placeholder="text"
-        type="text"
-        value={keyword}
-        onChange={(x) => setKeyword(x.target.value)}
-      />
-      <button onClick={handleSearchClick}>Search</button>
+      <form
+        className="mt-4 mx-auto w-full max-w-md flex items-center px-4"
+        onSubmit={(e) => {
+          e.preventDefault() // デフォルトのフォーム送信を防ぐ
+          handleSearchClick()
+        }}
+      >
+        <input
+          className="flex-grow p-2 border rounded mr-2"
+          placeholder="text"
+          type="text"
+          value={keyword}
+          onChange={(x) => setKeyword(x.target.value)}
+        />
+        <button className="p-2 bg-blue-500 text-white rounded" type="submit">
+          Search
+        </button>
+      </form>
       <table className={styles['table-container']}>
         <thead>
           <tr>
             <th>image</th>
             <th>ホテル名</th>
-            <th>URL</th>
             <th>宿泊価格</th>
           </tr>
         </thead>
@@ -68,14 +78,15 @@ const Hotels = () => {
             hotels.map((value) => {
               return (
                 <tr key={value.hotel[0].hotelBasicInfo.hotelNo}>
-                  <td className="relative">
-                    <Image
-                      src={value.hotel[0].hotelBasicInfo.hotelThumbnailUrl}
-                      alt="ホテルのサムネイル画像"
-                      className="object-cover"
-                      fill
-                      quality={100}
-                    />
+                  <td className={`relative ${styles['image-cell']}`}>
+                    <div className={styles['image-container']}>
+                      <Image
+                        src={value.hotel[0].hotelBasicInfo.hotelThumbnailUrl}
+                        alt="ホテルのサムネイル画像"
+                        layout="fill"
+                        className={styles['image']}
+                      />
+                    </div>
                   </td>
                   <td>
                     <Link
