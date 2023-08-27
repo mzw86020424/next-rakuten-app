@@ -1,10 +1,18 @@
 .table-container {
-  width: 95%;
+  /* width: 95%; */
   border-collapse: collapse;
   font-family: Arial, sans-serif;
   font-size: 14px;
   margin: 18px auto;
   table-layout: fixed; /* 各セルの幅を均等にする */
+}
+
+/* 小さい画面のときにも両サイドにmarginを追加するため */
+@media (max-width: 810px) {
+  .table-container {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 .table-container th,
@@ -15,7 +23,7 @@
 
 .table-container th {
   background-color: #f2f2f2;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .table-container a {
@@ -27,10 +35,24 @@
   text-decoration: underline;
 }
 
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-cell {
+  width: 20%;
+}
+
 .image-container {
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9のアスペクト比 */
   position: relative;
+  padding-bottom: 100%;
+  overflow: hidden;
 }
 
 .pagination-container {
