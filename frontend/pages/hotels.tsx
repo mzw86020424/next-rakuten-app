@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { HotelInfo } from '../types/hotels'
 import { getHotels } from '@/services/rakutenApi'
 import styles from '@/styles/hotels.module.css'
+import Image from 'next/image'
 
 const Hotels = () => {
   const [keyword, setKeyword] = useState('')
@@ -51,6 +52,7 @@ const Hotels = () => {
       <table className={styles['table-container']}>
         <thead>
           <tr>
+            <th>image</th>
             <th>ホテル名</th>
             <th>URL</th>
             <th>宿泊価格</th>
@@ -59,12 +61,21 @@ const Hotels = () => {
         <tbody>
           {hotels.length === 0 ? (
             <tr>
-              <td colSpan={3}>No results</td>
+              <td colSpan={4}>No results</td>
             </tr>
           ) : (
             hotels.map((value) => {
               return (
                 <tr key={value.hotel[0].hotelBasicInfo.hotelNo}>
+                  <td className="relative">
+                    <Image
+                      src={value.hotel[0].hotelBasicInfo.hotelThumbnailUrl}
+                      alt="ホテルのサムネイル画像"
+                      className="object-cover"
+                      fill
+                      quality={100}
+                    />
+                  </td>
                   <td>
                     <h1>{value.hotel[0].hotelBasicInfo.hotelName}</h1>
                   </td>
