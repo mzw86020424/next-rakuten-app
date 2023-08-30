@@ -1,17 +1,28 @@
 // 楽天トラベルキーワード検索API:https://webservice.rakuten.co.jp/documentation/keyword-hotel-search
-import { HotelSearchParam, HotelSearchResult } from '@/types/hotels'
+import { HotelsSearchParam, HotelsSearchResult, HotelSearchParam } from '@/types/hotels'
 import 'cross-fetch/polyfill'
 
 export const getHotels = async (
   keyword: string,
   page: number
-): Promise<HotelSearchResult> => {
+): Promise<HotelsSearchResult> => {
   const endpoint = 'Travel/KeywordHotelSearch'
   const params = {
     keyword: keyword,
     page: page,
   }
-  const data = await fetchRakutenApi<HotelSearchParam, HotelSearchResult>(
+  const data = await fetchRakutenApi<HotelsSearchParam, HotelsSearchResult>(
+    endpoint,
+    params
+  )
+  return data
+}
+
+export const getHotel = async (hotelNo: number): Promise<HotelsSearchResult> => {
+  const endpoint = 'Travel/HotelDetailSearch'
+  const params = { hotelNo: hotelNo }
+
+  const data = await fetchRakutenApi<HotelSearchParam, HotelsSearchResult>(
     endpoint,
     params
   )
@@ -32,7 +43,7 @@ const fetchRakutenApi = async <T extends Record<string, unknown>, U>(
   const url = createRakutenApiUrl<T>(endpoint, params)
   const response = await fetch(url)
   if (!response.ok) {
-    throw new Error('Network response was not ok')
+    throw new Error(`${response.status}`)
   }
   const data = (await response.json()) as U
   return data

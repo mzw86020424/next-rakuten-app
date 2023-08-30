@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { HotelInfo } from '../types/hotels'
+import { HotelInfo } from '@/types/hotels'
 import { getHotels } from '@/services/rakutenApi'
 import styles from '@/styles/hotels.module.css'
 import Image from 'next/image'
@@ -90,12 +90,16 @@ const Hotels = () => {
                   </td>
                   <td>
                     <Link
-                      href={value.hotel[0].hotelBasicInfo.hotelInformationUrl}
+                      href={`/hotels/${value.hotel[0].hotelBasicInfo.hotelNo}`}
                       target="_blank"
-                      rel="noopener noreferrer"
                     >
                       {value.hotel[0].hotelBasicInfo.hotelName}
                     </Link>
+                  </td>
+                  <td>
+                    <a href={value.hotel[0].hotelBasicInfo.hotelInformationUrl}>
+                      {value.hotel[0].hotelBasicInfo.hotelInformationUrl}
+                    </a>
                   </td>
                   <td>{value.hotel[0].hotelBasicInfo.hotelMinCharge}円 ~</td>
                 </tr>
